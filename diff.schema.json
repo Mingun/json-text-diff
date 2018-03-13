@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://github.com/Mingun/json-text-diff/blob/master/diff.schema.json",
+
+  "type": "array",
+  "item": { "$ref": "#/definitions/change" },
+
+  "definitions": {
+    "change": {
+      "description": "Object that describes one line of compared texts",
+      "oneOf": [
+        { "$ref": "#/definitions/changedLineWithInlineChanges" },
+        { "$ref": "#/definitions/changedLineWithoutInlineChanges" },
+        { "$ref": "#/definitions/unchangedLine" }
+      ]
+    },
+    "changedLineWithInlineChanges": {
+      "type": "object",
+      "description": "Line that exist in both sides, but different in each other",
+      "properties": {
+        "kind": { "enum": ["+", "-"] },
+        "changes": {
+          "type": "array",
+          "item": { "$ref": "#/definitions/inlineChange" }
+        }
+      },
+      "required": ["kind", "changes"]
+    },
+    "changedLineWithoutInlineChanges": {
+      "type": "object",
+      "description": "Line that just added or removed",
+      "properties": {
+        "kind": { "enum": ["+", "-"] },
+        "value": {
+          "type": "string",
+          "description": "Line part value that is the same in both sides"
+        }
+      },
+      "required": ["kind", "value"]
+    },
+    "unchangedLine": {
+      "type": "object",
+      "description": "Line in the diff that is the same in both sides",
+      "properties": {
+        "kind": { "enum": [" "] },
+        "value": {
+          "type": "string",
+          "description": "Unchanged line content"
+        }
+      },
+      "required": ["kind", "value"]
+    },
+
+    "inlineChange": {
+      "type": "object",
+      "properties": {
+        "kind": { "enum": ["+", "-", " "] },
+        "value": {
+          "type": "string",
+          "description": "Part of line that added, removed or the same in both sides"
+        }
+      },
+      "required": ["kind", "value"]
+    }
+  }
+}

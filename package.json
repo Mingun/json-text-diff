@@ -1,0 +1,50 @@
+{
+  "name": "json-text-diff",
+  "version": "1.0.0",
+  "description": "Library for generating diffs for objects for use in assertion libraries",
+  "main": "lib/index.js",
+  "dependencies": {
+    "diff": "^3.5.0",
+    "json-stringify-safe": "^5.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-json-schema": "^1.5.0",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.18.2",
+    "mocha": "^5.0.4",
+    "nyc": "^11.6.0"
+  },
+  "scripts": {
+    "test": "nyc mocha test/**.js",
+    "lint": "eslint lib/**.js test/**.js",
+    "report": "nyc report --reporter=html",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "author": "Mingun",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mingun/json-text-diff.git"
+  },
+  "keywords": [
+    "diff",
+    "json"
+  ],
+  "bugs": {
+    "url": "https://github.com/Mingun/json-text-diff/issues"
+  },
+  "homepage": "https://github.com/Mingun/json-text-diff#readme",
+  "nyc": {
+    "reporter": [
+      "text",
+      "text-summary"
+    ]
+  },
+  "engines": {
+    "node": ">=4"
+  }
+}
