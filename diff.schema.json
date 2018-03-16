@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://github.com/Mingun/json-text-diff/blob/master/diff.schema.json",
+  "id": "https://github.com/Mingun/structured-diff/blob/master/diff.schema.json",
 
   "type": "array",
-  "item": { "$ref": "#/definitions/change" },
+  "item": { "$ref": "#/definitions/lineChange" },
 
   "definitions": {
-    "change": {
+    "lineChange": {
       "description": "Object that describes one line of compared texts",
       "oneOf": [
         { "$ref": "#/definitions/changedLineWithInlineChanges" },
@@ -21,7 +21,7 @@
         "kind": { "enum": ["+", "-"] },
         "changes": {
           "type": "array",
-          "item": { "$ref": "#/definitions/inlineChange" }
+          "item": { "$ref": "#/definitions/change" }
         }
       },
       "required": ["kind", "changes"]
@@ -51,8 +51,9 @@
       "required": ["kind", "value"]
     },
 
-    "inlineChange": {
+    "change": {
       "type": "object",
+      "description": "Represents inline change of the line",
       "properties": {
         "kind": { "enum": ["+", "-", " "] },
         "value": {

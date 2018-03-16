@@ -1,5 +1,5 @@
 {
-  "name": "json-text-diff",
+  "name": "structured-diff",
   "version": "1.0.0",
   "description": "Library for generating diffs for objects for use in assertion libraries",
   "main": "lib/index.js",
@@ -28,16 +28,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mingun/json-text-diff.git"
+    "url": "git+https://github.com/Mingun/structured-diff.git"
   },
   "keywords": [
     "diff",
     "json"
   ],
   "bugs": {
-    "url": "https://github.com/Mingun/json-text-diff/issues"
+    "url": "https://github.com/Mingun/structured-diff/issues"
   },
-  "homepage": "https://github.com/Mingun/json-text-diff#readme",
+  "homepage": "https://github.com/Mingun/structured-diff#readme",
   "nyc": {
     "reporter": [
       "text",

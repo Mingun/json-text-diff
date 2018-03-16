@@ -1,26 +1,26 @@
-[![Build Status](https://img.shields.io/travis/Mingun/json-text-diff.svg?label=travis)](https://travis-ci.org/Mingun/json-text-diff)
-[![Coverage Status](https://coveralls.io/repos/github/Mingun/json-text-diff/badge.svg?branch=master)](https://coveralls.io/github/Mingun/json-text-diff?branch=master)
-[![npm](https://img.shields.io/npm/v/json-text-diff.svg)](https://www.npmjs.com/package/json-text-diff)
+[![Build Status](https://img.shields.io/travis/Mingun/structured-diff.svg?label=travis)](https://travis-ci.org/Mingun/structured-diff)
+[![Coverage Status](https://coveralls.io/repos/github/Mingun/structured-diff/badge.svg?branch=master)](https://coveralls.io/github/Mingun/structured-diff?branch=master)
+[![npm](https://img.shields.io/npm/v/structured-diff.svg)](https://www.npmjs.com/package/structured-diff)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
-# json-text-diff
+# structured-diff
 Generates structurual diffs for two JS objects. Objects can have circular references.
 
 ## Installation
 ```
-npm install json-text-diff
+npm install structured-diff
 ```
 
 ## Usage
 ```js
-let generateDiff = require('json-text-diff');
+let generateDiff = require('structured-diff');
 
 let diff = generateDiff(
   { some: 'foo', object: true },
   { object: 'is', cool: ['yes', true] }
 );
 ```
-`diff` has format describing by [JSON Schema](https://github.com/Mingun/json-text-diff/blob/master/diff.schema.json).
+`diff` has format describing by [JSON Schema](https://github.com/Mingun/structured-diff/blob/master/diff.schema.json).
 Also see [Diff format](#diff-format) section.
 
 ## API
@@ -42,7 +42,7 @@ about inline differences.
 
 ## Diff format
 Function returns array when each element describes one line in unified diff output.
-Description of format also available as [JSON Schema](https://github.com/Mingun/json-text-diff/blob/master/diff.schema.json).
+Description of format also available as [JSON Schema](https://github.com/Mingun/structured-diff/blob/master/diff.schema.json).
 
 Each array element has `kind` property:
 - `' '` -- line not changed (the same in both sides). Line content in the `value` property
