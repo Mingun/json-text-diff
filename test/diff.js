@@ -1,6 +1,6 @@
 'use strict';
 
-let diff   = require('../lib/object.js');
+let diff   = require('../lib/object');
 let schema = require('../diff.schema.json');
 
 let chai = require('chai');
@@ -23,11 +23,6 @@ function simpleClone(obj) {
 }
 
 describe('structured-diff', function() {
-  it('returns value corresponding to JSON schema', function() {
-    expect(diff('a', 'b')).to.be.an.jsonSchema(schema);
-    expect(diff(true, false)).to.be.an.jsonSchema(schema);
-  });
-
   describe('returns empty array for the same objects', function() {
     const SAME_OBJECTS = [
       { name: 'undefined',
@@ -169,7 +164,7 @@ describe('structured-diff', function() {
     expect(diff(
       'some foo string',
       'some bar string'
-    )).to.deep.equal([
+    )).to.be.diff([
       {
         kind: '-',
         changes: [

@@ -41,6 +41,11 @@
   },
   "homepage": "https://github.com/Mingun/structured-diff#readme",
   "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
     "reporter": [
       "text",
       "text-summary"
