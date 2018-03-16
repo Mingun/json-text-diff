@@ -4,7 +4,9 @@
   "description": "Library for generating diffs for objects for use in assertion libraries",
   "main": "lib/index.js",
   "dependencies": {
-    "diff": "^3.5.0",
+    "diff": "^3.5.0"
+  },
+  "optionalDependencies": {
     "json-stringify-safe": "^5.0.1"
   },
   "devDependencies": {

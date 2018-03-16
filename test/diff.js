@@ -1,6 +1,6 @@
 'use strict';
 
-let diff   = require('../lib/index.js');
+let diff   = require('../lib/object.js');
 let schema = require('../diff.schema.json');
 
 let chai = require('chai');
