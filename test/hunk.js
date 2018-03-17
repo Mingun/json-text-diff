@@ -3,14 +3,14 @@
 let diff    = require('../lib/object');
 let toHunks = require('../lib/hunk');
 
-let chai    = require('chai');
+let chai   = require('chai');
 let expect = chai.expect;
 
 function hunk(expected, actual, context) {
   return toHunks(diff(expected, actual), context);
 }
 
-describe('hunks', function() {
+describe('hunk module', function() {
   it('generates hunks', function() {
     expect(hunk('foo', 'foo')).to.deep.equals([]);
     expect(hunk('foo', 'bar')).to.deep.equals([{

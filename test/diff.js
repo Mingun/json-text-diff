@@ -23,7 +23,7 @@ function simpleClone(obj) {
 }
 
 describe('structured-diff', function() {
-  describe('returns empty array for the same objects', function() {
+  describe('returns object without changes for the same objects', function() {
     const SAME_OBJECTS = [
       { name: 'undefined',
         value: undefined,
