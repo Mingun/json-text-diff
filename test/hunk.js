@@ -1,6 +1,6 @@
 'use strict';
 
-let diff    = require('../lib/object');
+let diff    = require('../lib/generate');
 let toHunks = require('../lib/hunk');
 
 let chai   = require('chai');

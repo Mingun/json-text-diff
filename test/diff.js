@@ -1,7 +1,7 @@
 'use strict';
 
 let Diff     = require('../lib/diff');
-let generate = require('../lib/object');
+let generate = require('../lib/generate');
 let schema   = require('../diff.schema.json');
 
 let chai = require('chai');
@@ -246,6 +246,13 @@ describe('structured-diff', function() {
       });
     });
   }
+
+  it('API works', function() {
+    expect(require('../lib')).to.deep.equals({
+      Diff: Diff,
+      generateDiff: generate
+    });
+  });
 
   it('generate unified differencies', function() {
     expect(new Diff(
