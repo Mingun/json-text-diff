@@ -237,7 +237,19 @@ describe('structured-diff', function() {
     });
   }
 
-  it('generates inline differencies', function() {
+  it('generate unified differencies', function() {
+    expect(generate(
+      '{\nstring\n}',
+      'string'
+    )).to.be.diff([
+      { kind: '-', value: '{' },
+      { kind: '-', value: 'string' },
+      { kind: '-', value: '}' },
+      { kind: '+', value: 'string' },
+    ]);
+  });
+
+  it('generate inline differencies in unified mode', function() {
     expect(generate(
       'some foo string',
       'some bar string'
