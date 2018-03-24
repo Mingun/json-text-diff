@@ -1,8 +1,7 @@
 'use strict';
 
-let diff     = require('../lib/object');
-let toInline = require('../lib/inline');
-let toHunks  = require('../lib/hunk');
+let diff    = require('../lib/object');
+let toHunks = require('../lib/hunk');
 
 let chai   = require('chai');
 let expect = chai.expect;
@@ -12,7 +11,7 @@ describe('hunk module', function() {
     /* eslint-disable no-inner-declarations */
     function hunk(expected, actual, context) {
       let d = diff(expected, actual);
-      return toHunks(inline ? toInline(d) : d, context);
+      return toHunks(inline ? d.inline() : d.unified(), context);
     }
     /* eslint-enable no-inner-declarations */
 

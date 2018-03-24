@@ -1,7 +1,7 @@
 'use strict';
 
+let Diff     = require('../lib/diff');
 let generate = require('../lib/object');
-let toInline = require('../lib/inline');
 let schema   = require('../diff.schema.json');
 
 let chai = require('chai');
@@ -26,9 +26,9 @@ function simpleClone(obj) {
 describe('structured-diff', function() {
   for (let inline of [false, true]) {
     /* eslint-disable no-inner-declarations */
-    function diff(expected, actual) {
+    function diff(expected, actual, context) {
       let d = generate(expected, actual);
-      return inline ? toInline(d) : d;
+      return inline ? d.inline(context) : d.unified(context);
     }
     /* eslint-enable no-inner-declarations */
 
@@ -168,8 +168,7 @@ describe('structured-diff', function() {
                 { kind: kind1, value: '  '          },
                 { kind: ' ',   value: '"'           },
                 { kind: kind1, value: 'self":'      },
-                { kind: ' ',   value: ' '           },
-                { kind: ' ',   value: '"'           },
+                { kind: ' ',   value: ' "'          },
                 { kind: kind1, value: '[Circular]"' },
               ]
             },
@@ -234,14 +233,25 @@ describe('structured-diff', function() {
           inline ? makeInlineDiff(true ) : makeDiff(true )
         );
       });
+
+      it('use context', function() {
+        let expected = 'foo bar baz'.split(' ').join('\n');
+        let actual   = 'foo baz'.split(' ').join('\n');
+
+        expect(diff(expected, actual, 0)).to.be.diff([{
+          oldStart: 2, oldLines: 1,
+          newStart: 2, newLines: 0,
+          lines: [{ kind: '-', value: 'bar' }]
+        }]);
+      });
     });
   }
 
   it('generate unified differencies', function() {
-    expect(generate(
+    expect(new Diff(
       '{\nstring\n}',
       'string'
-    )).to.be.diff([
+    ).unified()).to.be.diff([
       { kind: '-', value: '{' },
       { kind: '-', value: 'string' },
       { kind: '-', value: '}' },
@@ -250,10 +260,10 @@ describe('structured-diff', function() {
   });
 
   it('generate inline differencies in unified mode', function() {
-    expect(generate(
+    expect(new Diff(
       'some foo string',
       'some bar string'
-    )).to.be.diff([
+    ).unified()).to.be.diff([
       {
         kind: '-',
         changes: [
