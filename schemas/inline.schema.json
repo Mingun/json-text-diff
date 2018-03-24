@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/Mingun/structured-diff/blob/master/unified.schema.json",
+  "$id": "https://github.com/Mingun/structured-diff/blob/master/schemas/inline.schema.json",
 
   "oneOf": [
     { "$ref": "#/definitions/lines" },
@@ -29,7 +29,7 @@
       "type": "object",
       "description": "Line that exist in both sides, but different in each other",
       "properties": {
-        "kind": { "enum": ["+", "-"] },
+        "kind": { "enum": ["?"] },
         "changes": {
           "type": "array",
           "items": { "$ref": "#/definitions/change" }

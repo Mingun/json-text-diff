@@ -2,8 +2,8 @@
 
 let Diff     = require('../lib/diff');
 let generate = require('../lib/generate');
-let schemaUnified = require('../unified.schema.json');
-let schemaInline  = require('../inline.schema.json');
+let schemaUnified = require('../schemas/unified.schema.json');
+let schemaInline  = require('../schemas/inline.schema.json');
 
 let chai = require('chai');
 let expect = chai.expect;
