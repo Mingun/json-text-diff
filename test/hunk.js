@@ -17,9 +17,14 @@ describe('hunk module', function() {
     /* eslint-enable no-inner-declarations */
 
     describe('in ' + (inline ? 'inline' : 'unified') + ' mode', function() {
-      it('generates hunks', function() {
+      it('generates empty hunks for no differencies', function() {
         expect(hunk('foo', 'foo')).to.deep.equals([]);
-        expect(hunk('foo', 'bar')).to.deep.equals([{
+        expect(hunk('foo', 'foo', null)).to.deep.equals([]);
+        expect(hunk('foo', 'foo', 4)).to.deep.equals([]);
+      });
+
+      it('generates hunks', function() {
+        let expected = [{
           oldStart: 1, oldLines: 1,
           newStart: 1, newLines: 1,
           lines: inline
@@ -37,15 +42,21 @@ describe('hunk module', function() {
                 { kind: '+', value: 'bar' },
               ]
           /* eslint-enable indent-legacy */
-        }]);
+        }];
+        expect(hunk('foo', 'bar')).to.deep.equals(expected);
+        expect(hunk('foo', 'bar', null)).to.deep.equals(expected);
+        expect(hunk('foo', 'bar', 4)).to.deep.equals(expected);
       });
 
       describe('use specified line count for context', function() {
         let expected = 'A long time ago in a galaxy far, far away.... (actually not so far)'.split(' ').join('\n');
         let actual   = 'A not so long time ago in a galaxy far, far away....'.split(' ').join('\n');
 
-        it('when `context` not defined use 4 lines of context', function() {
-          expect(hunk(expected, actual)).to.deep.equals(hunk(expected, actual, 4));
+        it('when `context` not defined or null include all lines', function() {
+          // Context, equals to line count guaranties that all lines will be included
+          let context = Math.max(expected.split('\n').length, actual.split('\n').length);
+          expect(hunk(expected, actual)).to.deep.equals(hunk(expected, actual, context));
+          expect(hunk(expected, actual)).to.deep.equals(hunk(expected, actual, null));
         });
 
         it('when `context` is defined use specified value', function() {
