@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/structured-diff.svg)](https://www.npmjs.com/package/structured-diff)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/Mingun.svg)](https://saucelabs.com/u/Mingun)
+
 # structured-diff
 Generates structurual diffs for two JS objects. Objects can have circular references.
 
