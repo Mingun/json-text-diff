@@ -24,6 +24,10 @@ jobs:
     - stage: lint
       node_js: node
       script: npm run lint
+    - stage: test
+      node_js: node
+      env: BROWSER=true # Just mark in the Travis UI
+      script: npm run browser
 
 after_success:
   - npm run coverage

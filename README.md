@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/Mingun/structured-diff/badge.svg?branch=master)](https://coveralls.io/github/Mingun/structured-diff?branch=master)
 [![npm](https://img.shields.io/npm/v/structured-diff.svg)](https://www.npmjs.com/package/structured-diff)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=cHhBYit2dm5uWUNjVEdoV3doWUgwL0VoUHpRd2o5MzBtNjB2Z1hmSVQ5WT0tLVFrelFQeHgyN3RZVlEydVM0bThkRWc9PQ==--62876d2d36d97880924c4aca255a90fd60bbb18d)](https://www.browserstack.com/automate/public-build/cHhBYit2dm5uWUNjVEdoV3doWUgwL0VoUHpRd2o5MzBtNjB2Z1hmSVQ5WT0tLVFrelFQeHgyN3RZVlEydVM0bThkRWc9PQ==--62876d2d36d97880924c4aca255a90fd60bbb18d)
 
 # structured-diff
 Generates structurual diffs for two JS objects. Objects can have circular references.
