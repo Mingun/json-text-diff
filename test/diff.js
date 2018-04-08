@@ -2,15 +2,19 @@
 
 let Diff     = require('../lib/diff');
 let generate = require('../lib/generate');
-let schema   = require('../diff.schema.json');
+let schemaUnified = require('../unified.schema.json');
+let schemaInline  = require('../inline.schema.json');
 
 let chai = require('chai');
 let expect = chai.expect;
 
 chai.use(require('chai-json-schema'));
 chai.use(function() {
-  chai.Assertion.addMethod('diff', function(diff) {
-    return new chai.Assertion(this._obj)
+  chai.Assertion.addMethod('diff', function(diff, inline, context) {
+    let result = inline ? this._obj.inline(context) : this._obj.unified(context);
+    let schema = inline ? schemaInline : schemaUnified;
+
+    return new chai.Assertion(result)
       .to.be.jsonSchema(schema)
       .and.deep.equals(diff);
   });
@@ -25,13 +29,6 @@ function simpleClone(obj) {
 
 describe('structured-diff', function() {
   for (let inline of [false, true]) {
-    /* eslint-disable no-inner-declarations */
-    function diff(expected, actual, context) {
-      let d = generate(expected, actual);
-      return inline ? d.inline(context) : d.unified(context);
-    }
-    /* eslint-enable no-inner-declarations */
-
     describe('in ' + (inline ? 'inline' : 'unified') + ' mode', function() {
       describe('returns object without changes for the same objects', function() {
         const SAME_OBJECTS = [
@@ -90,7 +87,7 @@ describe('structured-diff', function() {
         ];
         for (let desc of SAME_OBJECTS) {
           it(desc.name, function() {
-            expect(diff(desc.value, simpleClone(desc.value))).to.be.diff(desc.diff);
+            expect(generate(desc.value, simpleClone(desc.value))).to.be.diff(desc.diff, inline);
           });
         }
       });
@@ -149,11 +146,11 @@ describe('structured-diff', function() {
         let obj = [];
         obj.push(obj);
 
-        expect(diff(obj, 'some boring string')).to.be.diff(
-          inline ? makeInlineDiff(false) : makeDiff(false)
+        expect(generate(obj, 'some boring string')).to.be.diff(
+          inline ? makeInlineDiff(false) : makeDiff(false), inline
         );
-        expect(diff('some boring string', obj)).to.be.diff(
-          inline ? makeInlineDiff(true ) : makeDiff(true )
+        expect(generate('some boring string', obj)).to.be.diff(
+          inline ? makeInlineDiff(true ) : makeDiff(true ), inline
         );
       });
 
@@ -226,11 +223,11 @@ describe('structured-diff', function() {
         let obj = {};
         obj.self = obj;
 
-        expect(diff(obj, 'some boring string')).to.be.diff(
-          inline ? makeInlineDiff(false) : makeDiff(false)
+        expect(generate(obj, 'some boring string')).to.be.diff(
+          inline ? makeInlineDiff(false) : makeDiff(false), inline
         );
-        expect(diff('some boring string', obj)).to.be.diff(
-          inline ? makeInlineDiff(true ) : makeDiff(true )
+        expect(generate('some boring string', obj)).to.be.diff(
+          inline ? makeInlineDiff(true ) : makeDiff(true ), inline
         );
       });
 
@@ -238,11 +235,11 @@ describe('structured-diff', function() {
         let expected = 'foo bar baz'.split(' ').join('\n');
         let actual   = 'foo baz'.split(' ').join('\n');
 
-        expect(diff(expected, actual, 0)).to.be.diff([{
+        expect(generate(expected, actual)).to.be.diff([{
           oldStart: 2, oldLines: 1,
           newStart: 2, newLines: 0,
           lines: [{ kind: '-', value: 'bar' }]
-        }]);
+        }], inline, 0);
       });
     });
   }
@@ -258,7 +255,7 @@ describe('structured-diff', function() {
     expect(new Diff(
       '{\nstring\n}',
       'string'
-    ).unified()).to.be.diff([
+    )).to.be.diff([
       { kind: '-', value: '{' },
       { kind: '-', value: 'string' },
       { kind: '-', value: '}' },
@@ -270,7 +267,7 @@ describe('structured-diff', function() {
     expect(new Diff(
       'some foo string',
       'some bar string'
-    ).unified()).to.be.diff([
+    )).to.be.diff([
       {
         kind: '-',
         changes: [

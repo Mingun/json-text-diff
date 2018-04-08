@@ -1,11 +1,22 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://github.com/Mingun/structured-diff/blob/master/diff.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Mingun/structured-diff/blob/master/inline.schema.json",
 
-  "type": "array",
-  "item": { "$ref": "#/definitions/lineChange" },
+  "oneOf": [
+    { "$ref": "#/definitions/lines" },
+    { "$ref": "#/definitions/hunks" }
+  ],
 
   "definitions": {
+    "lines": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/lineChange" }
+    },
+    "hunks": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/hunk" }
+    },
+
     "lineChange": {
       "description": "Object that describes one line of compared texts",
       "oneOf": [
@@ -18,10 +29,10 @@
       "type": "object",
       "description": "Line that exist in both sides, but different in each other",
       "properties": {
-        "kind": { "enum": ["+", "-"] },
+        "kind": { "enum": ["?"] },
         "changes": {
           "type": "array",
-          "item": { "$ref": "#/definitions/change" }
+          "items": { "$ref": "#/definitions/change" }
         }
       },
       "required": ["kind", "changes"]
@@ -62,6 +73,18 @@
         }
       },
       "required": ["kind", "value"]
+    },
+
+    "hunk": {
+      "type": "object",
+      "properties": {
+        "oldStart": { "type": "number", "minimum": 1 },
+        "oldLines": { "type": "number", "minimum": 0 },
+        "newStart": { "type": "number", "minimum": 1 },
+        "newLines": { "type": "number", "minimum": 0 },
+        "lines":    { "$ref": "#/definitions/lines"  }
+      },
+      "required": ["oldStart", "oldLines", "newStart", "newLines", "lines"]
     }
   }
 }
