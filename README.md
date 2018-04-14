@@ -23,6 +23,8 @@ let diff = generateDiff(
 `diff` has format describing by [JSON Schema](https://github.com/Mingun/structured-diff/blob/master/diff.schema.json).
 Also see [Diff format](#diff-format) section.
 
+Also see [examples](https://github.com/Mingun/structured-diff/tree/master/examples).
+
 ## API
 Module exports one function for generating diffs:
 
